@@ -21,7 +21,7 @@ namespace api.Controllers
             _todoRepo = todoRepo;
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] CreateTasksDto taskDto)
         {
             if (!ModelState.IsValid)
@@ -34,7 +34,7 @@ namespace api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = taskModel.TaskListId }, taskModel.GetTaskDto());
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll([FromQuery] TaskQueryObject query)
         {
             var task = await _todoRepo.GetAllAsync(query);

@@ -1,0 +1,92 @@
+﻿@page "/CreateTask"
+@using blazor.Models
+@using blazor.Service
+@inject ApiService ApiService
+
+<h3>Create Task</h3>
+
+<EditForm Model="@taskInput" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="title" class="form-label">Title</label>
+            <InputText id="title" class="form-control" @bind-Value="taskInput.Title" />
+            <ValidationMessage For="@(() => taskInput.Title)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label for="description" class="form-label">Description</label>
+            <InputTextArea id="description" class="form-control" @bind-Value="taskInput.Desc" />
+            <ValidationMessage For="@(() => taskInput.Desc)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="priority" class="form-label">Priority</label>
+            <InputSelect id="priority" class="form-control" @bind-Value="taskInput.Priority">
+                <option value="">-- Select Priority --</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => taskInput.Priority)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="startDate" class="form-label">Start Date</label>
+            <InputDate id="startDate" class="form-control" @bind-Value="taskInput.StartDate" />
+            <ValidationMessage For="@(() => taskInput.StartDate)" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="endDate" class="form-label">End Date</label>
+            <InputDate id="endDate" class="form-control" @bind-Value="taskInput.EndDate" />
+            <ValidationMessage For="@(() => taskInput.EndDate)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@if (submitted)
+{
+    <div class="alert alert-success mt-3">
+        <strong>Task Added Successfully!</strong>
+        <p>Title: @submittedTask.Title</p>
+        <p>Description: @submittedTask.Desc</p>
+        <p>Priority: @submittedTask.Priority</p>
+        <p>Start Date: @submittedTask.StartDate.ToString("dd/MM/yyyy")</p>
+        <p>End Date: @submittedTask.EndDate.ToString("dd/MM/yyyy")</p>
+    </div>
+}
+
+@code {
+    private CreateTaskDto taskInput = new CreateTaskDto
+    {
+        StartDate = DateTime.Today,
+        EndDate = DateTime.Today
+    };
+
+    private CreateTaskDto submittedTask;
+    private bool submitted = false;
+
+    private async Task HandleValidSubmit()
+    {
+        await ApiService.CreateAsync(taskInput);
+
+        submittedTask = taskInput;
+        submitted = true;
+
+        taskInput = new CreateTaskDto
+        {
+            StartDate = DateTime.Today,
+            EndDate = DateTime.Today
+        };
+    }
+}
