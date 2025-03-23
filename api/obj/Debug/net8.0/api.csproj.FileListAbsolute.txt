@@ -146,4 +146,14 @@ C:\Users\gebe\Desktop\Test\to-do-list\api\obj\Debug\net8.0\api.pdb
 C:\Users\gebe\Desktop\Test\to-do-list\api\obj\Debug\net8.0\api.genruntimeconfig.cache
 C:\Users\gebe\Desktop\Test\to-do-list\api\obj\Debug\net8.0\ref\api.dll
 C:\Users\gebe\Desktop\Test\to-do-list\api\obj\Debug\net8.0\api.sourcelink.json
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\gebe\Desktop\Test\to-do-list\api\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
 C:\Users\gebe\Desktop\Test\to-do-list\api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

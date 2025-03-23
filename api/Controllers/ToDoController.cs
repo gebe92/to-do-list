@@ -6,6 +6,7 @@ using api.Dtos;
 using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -22,6 +23,7 @@ namespace api.Controllers
         }
 
         [HttpPost("Create")]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateTasksDto taskDto)
         {
             if (!ModelState.IsValid)
@@ -35,6 +37,7 @@ namespace api.Controllers
         }
 
         [HttpGet("GetAll")]
+        [Authorize]
         public async Task<IActionResult> GetAll([FromQuery] TaskQueryObject query)
         {
             var task = await _todoRepo.GetAllAsync(query);
@@ -44,6 +47,7 @@ namespace api.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -62,6 +66,7 @@ namespace api.Controllers
         }
 
         [HttpGet("user/{userId:int}")]
+        [Authorize]
         public async Task<IActionResult> GetByUserId([FromRoute] int userId, [FromQuery] TaskQueryObject query)
         {
             if (!ModelState.IsValid)
@@ -83,6 +88,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTaskDto taskDto)
         {
             if (!ModelState.IsValid)
@@ -102,6 +108,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)
