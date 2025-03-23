@@ -1,0 +1,87 @@
+﻿@page "/GetByUser"
+
+@using blazor.Models
+@using blazor.Service
+
+@inject ApiService ApiService
+@inject NavigationManager NavigationManager
+
+<PageTitle>List Of Task</PageTitle>
+<h3>List Of Task</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width: 150px;" @onclick="() => SortTable(nameof(TaskList.Title))">Title @GetSortIcon(nameof(TaskList.Title))</th>
+            <th style="width: 150px;" @onclick="() => SortTable(nameof(TaskList.Priority))">Priority @GetSortIcon(nameof(TaskList.Priority))</th>
+            <th style="width: 150px;" @onclick="() => SortTable(nameof(TaskList.Status))">Status @GetSortIcon(nameof(TaskList.Status))</th>
+            <th style="width: 150px;" @onclick="() => SortTable(nameof(TaskList.CreatedAt))">Created Date @GetSortIcon(nameof(TaskList.CreatedAt))</th>
+            <th style="width: 150px;" @onclick="() => SortTable(nameof(TaskList.StartDate))">Start Date @GetSortIcon(nameof(TaskList.StartDate))</th>
+            <th style="width: 150px;" @onclick="() => SortTable(nameof(TaskList.EndDate))">End Date @GetSortIcon(nameof(TaskList.EndDate))</th>
+            <th style="width: 50px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in taskList)
+        {
+            <tr>
+                <td>@t.Title</td>
+                <td>@t.Priority</td>
+                <td>@t.Status</td>
+                <td>@t.CreatedAt.ToString("dd/MM/yyyy")</td>
+                <td>@t.StartDate.ToString("dd/MM/yyyy")</td>
+                <td>@t.EndDate.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="() => NavigateToEdit(t.TaskListId)">Edit</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<TaskList>? taskList = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        taskList = await ApiService.GetByUserAsync(1);
+    }
+
+    private string? sortedColumn;
+    private bool sortAscending = true;
+
+
+    private void SortTable(string columnName)
+    {
+        if (sortedColumn == columnName)
+        {
+            sortAscending = !sortAscending;
+        }
+        else
+        {
+            sortedColumn = columnName;
+            sortAscending = true;
+        }
+
+        taskList = sortAscending
+            ? taskList?.OrderBy(t => GetPropertyValue(t, columnName)).ToList()
+            : taskList?.OrderByDescending(t => GetPropertyValue(t, columnName)).ToList();
+    }
+
+    private object? GetPropertyValue(TaskList task, string propertyName)
+    {
+        return typeof(TaskList).GetProperty(propertyName)?.GetValue(task, null);
+    }
+
+    private string GetSortIcon(string columnName)
+    {
+        return sortedColumn == columnName
+            ? sortAscending ? "⬆️" : "⬇️"
+            : "";
+    }
+
+    private void NavigateToEdit(int taskId)
+    {
+        NavigationManager.NavigateTo($"/EditTask/{taskId}");
+    }
+}

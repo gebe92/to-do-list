@@ -59,12 +59,12 @@ namespace api.Repositories
 
         public async Task<List<TaskList>> GetByUserIdAsync(int userId, TaskQueryObject query)
         {
-            var trans = _context.TaskLists.Where(i => i.UserId == userId);
-            trans = Filter(trans, query);
+            var task = _context.TaskLists.Where(i => i.UserId == userId);
+            task = Filter(task, query);
 
             var skipNumber = (query.PageNumber - 1) * query.PageSize;
 
-            return await trans.Skip(skipNumber).Take(query.PageSize).ToListAsync();
+            return await task.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<TaskList?> UpdateAsync(int id, UpdateTaskDto taskDto)

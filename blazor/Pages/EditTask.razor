@@ -1,0 +1,170 @@
+﻿@page "/EditTask/{taskId:int}"
+
+@using blazor.Models
+@using blazor.Service
+
+@inject ApiService ApiService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit Task</PageTitle>
+<h3>Edit Task</h3>
+
+<EditForm Model="@taskInput" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="title" class="form-label">Title</label>
+            <InputText id="title" class="form-control" @bind-Value="taskInput.Title" />
+            <ValidationMessage For="@(() => taskInput.Title)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label for="description" class="form-label">Description</label>
+            <InputTextArea id="description" class="form-control" @bind-Value="taskInput.Desc" />
+            <ValidationMessage For="@(() => taskInput.Desc)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="priority" class="form-label">Priority</label>
+            <InputSelect id="priority" class="form-control" @bind-Value="taskInput.Priority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => taskInput.Priority)" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="status" class="form-label">Status</label>
+            <InputSelect id="status" class="form-control" @bind-Value="taskInput.Status">
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => taskInput.Status)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="startDate" class="form-label">Start Date</label>
+            <InputDate id="startDate" class="form-control" @bind-Value="taskInput.StartDate" />
+            <ValidationMessage For="@(() => taskInput.StartDate)" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="endDate" class="form-label">End Date</label>
+            <InputDate id="endDate" class="form-control" @bind-Value="taskInput.EndDate" />
+            <ValidationMessage For="@(() => taskInput.EndDate)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary me-2">Update</button>
+            <button type="button" class="btn btn-secondary me-2" @onclick="NavigateBack">Cancel</button>
+            <button type="button" class="btn btn-danger" @onclick="ShowDeleteConfirmation">Delete</button>
+        </div>
+    </div>
+</EditForm>
+
+@if (submitted)
+{
+    <div class="alert alert-success mt-3">
+        <strong>Task Updated Successfully!</strong>
+        <p>Title: @submittedTask.Title</p>
+        <p>Description: @submittedTask.Desc</p>
+        <p>Priority: @submittedTask.Priority</p>
+        <p>Status: @submittedTask.Status</p>
+        <p>Start Date: @submittedTask.StartDate.ToString("dd/MM/yyyy")</p>
+        <p>End Date: @submittedTask.EndDate.ToString("dd/MM/yyyy")</p>
+    </div>
+}
+
+@if (showDeleteConfirmation)
+{
+    <div class="modal" style="display:block; background-color:rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Task</h5>
+                    <button type="button" class="btn-close" @onclick="CloseDeleteConfirmation"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this task?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" @onclick="HandleDelete">Yes, Delete</button>
+                    <button class="btn btn-secondary" @onclick="CloseDeleteConfirmation">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public int taskId { get; set; }
+
+    private UpdateTaskDto taskInput = new UpdateTaskDto();
+    private UpdateTaskDto submittedTask;
+    private bool submitted = false;
+    private bool showDeleteConfirmation = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var task = await ApiService.GetByIdAsync(taskId);
+        if (task != null)
+        {
+            taskInput = new UpdateTaskDto
+            {
+                Title = task.Title,
+                Desc = task.Desc,
+                Priority = task.Priority,
+                Status = task.Status,
+                StartDate = task.StartDate,
+                EndDate = task.EndDate
+            };
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await ApiService.UpdateAsync(taskId, taskInput);
+
+        submittedTask = taskInput;
+        submitted = true;
+
+        NavigateBack();
+    }
+
+    private void NavigateBack()
+    {
+        NavigationManager.NavigateTo("/GetByUser");
+    }
+
+    private void ShowDeleteConfirmation()
+    {
+        showDeleteConfirmation = true;
+    }
+
+    private void CloseDeleteConfirmation()
+    {
+        showDeleteConfirmation = false;
+    }
+
+    private async Task HandleDelete()
+    {
+        var response = await ApiService.DeleteAsync(taskId);
+
+        showDeleteConfirmation = false;
+
+        if (response)
+        {
+            NavigationManager.NavigateTo("/GetByUser");
+        }
+    }
+}
