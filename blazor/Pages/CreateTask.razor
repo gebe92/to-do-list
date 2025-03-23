@@ -1,8 +1,11 @@
 ﻿@page "/CreateTask"
+
 @using blazor.Models
 @using blazor.Service
+
 @inject ApiService ApiService
 
+<PageTitle>Create Task</PageTitle>
 <h3>Create Task</h3>
 
 <EditForm Model="@taskInput" OnValidSubmit="HandleValidSubmit">
@@ -35,6 +38,16 @@
             </InputSelect>
             <ValidationMessage For="@(() => taskInput.Priority)" />
         </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="priority" class="form-label">Status</label>
+            <InputSelect id="priority" class="form-control" @bind-Value="taskInput.Status">
+                <option value="">-- Select Status --</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => taskInput.Status)" />
+        </div>
     </div>
 
     <div class="row">
@@ -61,6 +74,7 @@
         <p>Title: @submittedTask.Title</p>
         <p>Description: @submittedTask.Desc</p>
         <p>Priority: @submittedTask.Priority</p>
+        <p>Priority: @submittedTask.Status</p>
         <p>Start Date: @submittedTask.StartDate.ToString("dd/MM/yyyy")</p>
         <p>End Date: @submittedTask.EndDate.ToString("dd/MM/yyyy")</p>
     </div>
