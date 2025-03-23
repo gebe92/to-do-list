@@ -4,7 +4,7 @@ namespace blazor.Models
 {
     public class CreateTaskDto
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [Required(ErrorMessage = "Title is required.")]
         [MaxLength(100, ErrorMessage = "Task title cannot be over 100 characters.")]
         public string Title { get; set; } = string.Empty;

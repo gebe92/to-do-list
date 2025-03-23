@@ -6,7 +6,22 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            <AuthorizeView Roles="admin">
+                <p class="my-3 me-3">@context.User.Identity?.Name</p>
+            </AuthorizeView>
+            <AuthorizeView Roles="client">
+                <p class="my-3 me-3">@context.User.Identity?.Name!</p>
+            </AuthorizeView>
+
+            <AuthorizeView>
+                <Authorized>
+                    <button class="btn btn-primary" @onclick="Logout">Logout</button>
+                </Authorized>
+                <NotAuthorized>
+                    <a class="btn btn-primary" href="Login">Login</a>
+                    <a class="btn btn-outline-primary" href="Register">Register</a>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
 
         <article class="content px-4">
@@ -14,3 +29,14 @@
         </article>
     </main>
 </div>
+
+@inject AuthenticationStateProvider provider
+@inject NavigationManager navManager
+@code {
+    private void Logout()
+    {
+        var authStateProvider = (CustomAuthStateProvider)provider;
+        authStateProvider.Logout();
+        navManager.NavigateTo("/");
+    }
+}

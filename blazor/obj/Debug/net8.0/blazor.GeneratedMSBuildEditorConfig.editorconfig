@@ -28,12 +28,24 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/gebe/Desktop/Test/to-do-list/blazor/Pages/Auth/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxMb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gebe/Desktop/Test/to-do-list/blazor/Pages/Auth/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxSZWdpc3Rlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/gebe/Desktop/Test/to-do-list/blazor/Pages/CreateTask.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlVGFzay5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/gebe/Desktop/Test/to-do-list/blazor/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+[C:/Users/gebe/Desktop/Test/to-do-list/blazor/Pages/EditTask.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdFRhc2sucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/gebe/Desktop/Test/to-do-list/blazor/Pages/GetByUser.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2V0QnlVc2VyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/gebe/Desktop/Test/to-do-list/blazor/Pages/Home.razor]

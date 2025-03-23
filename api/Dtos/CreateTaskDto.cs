@@ -9,7 +9,7 @@ namespace api.Dtos
     public class CreateTasksDto
     {
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [Required]
         [MaxLength(100, ErrorMessage = "Task title cannot be over 100 characters")]
         public string Title { get; set; } = string.Empty;

@@ -6,7 +6,9 @@ using api.Dtos;
 using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -16,10 +18,12 @@ namespace api.Controllers
     public class ToDoController : ControllerBase
     {
         private readonly IToDoRepository _todoRepo;
+        private readonly UserManager<AppUser> userManager;
 
-        public ToDoController(IToDoRepository todoRepo)
+        public ToDoController(IToDoRepository todoRepo, UserManager<AppUser> userManager)
         {
             _todoRepo = todoRepo;
+            this.userManager = userManager;
         }
 
         [HttpPost("Create")]
@@ -65,9 +69,9 @@ namespace api.Controllers
             return Ok(task.GetTaskDto());
         }
 
-        [HttpGet("user/{userId:int}")]
+        [HttpGet("user/{userId}")]
         [Authorize]
-        public async Task<IActionResult> GetByUserId([FromRoute] int userId, [FromQuery] TaskQueryObject query)
+        public async Task<IActionResult> GetByUserId([FromRoute] string userId, [FromQuery] TaskQueryObject query)
         {
             if (!ModelState.IsValid)
             {

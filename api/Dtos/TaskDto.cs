@@ -8,7 +8,7 @@ namespace api.Dtos
     public class TaskDto
     {
         public int TaskListId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Desc { get; set; } = string.Empty;
         public string Priority { get; set; } = string.Empty;

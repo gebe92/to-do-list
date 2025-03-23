@@ -12,7 +12,7 @@ namespace api.Interfaces
     {
         Task<List<TaskList>> GetAllAsync(TaskQueryObject queryObject);
         Task<TaskList?> GetByIdAsync(int id);
-        Task<List<TaskList>> GetByUserIdAsync(int userId, TaskQueryObject queryObject);
+        Task<List<TaskList>> GetByUserIdAsync(string userId, TaskQueryObject queryObject);
         Task<TaskList> CreateAsync(TaskList taskModel);
         Task<TaskList?> UpdateAsync(int id, UpdateTaskDto taskDto);
         Task<TaskList?> DeleteAsync(int id);

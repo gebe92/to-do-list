@@ -9,21 +9,29 @@
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="createtask">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Create Task
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="getbyuser">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> List Of Task
-            </NavLink>
-        </div>
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="createtask">
+                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Create Task
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="getbyuser">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> List Of Task
+                    </NavLink>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <p class="text-white text-center my-3">You're not authorized.</p>
+            </NotAuthorized>
+        </AuthorizeView>
+        
     </nav>
 </div>
 

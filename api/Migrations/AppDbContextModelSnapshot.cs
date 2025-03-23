@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "70f02d34-8082-4bef-8581-45614452547b",
+                            Id = "bb1ec1f1-312b-4868-815f-02176d3ada54",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a2b3236f-25d6-4c33-bc86-303376d6653a",
+                            Id = "34af7542-902c-459c-97d5-154d6f919258",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -267,8 +267,9 @@ namespace api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TaskListId");
 

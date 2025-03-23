@@ -57,7 +57,7 @@ namespace api.Repositories
             return await _context.TaskLists.FirstOrDefaultAsync(i => i.TaskListId == id);
         }
 
-        public async Task<List<TaskList>> GetByUserIdAsync(int userId, TaskQueryObject query)
+        public async Task<List<TaskList>> GetByUserIdAsync(string userId, TaskQueryObject query)
         {
             var task = _context.TaskLists.Where(i => i.UserId == userId);
             task = Filter(task, query);

@@ -1,4 +1,6 @@
 ﻿using blazor.Models;
+using Blazored.LocalStorage;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
@@ -8,15 +10,25 @@ namespace blazor.Service
     public class ApiService
     {
         private readonly HttpClient _httpClient;
+        private readonly ISyncLocalStorageService _localStorage;
+        public string? userId;
 
-        public ApiService(HttpClient httpClient)
+        public ApiService(HttpClient httpClient, ISyncLocalStorageService localStorage)
         {
             _httpClient = httpClient;
+            _localStorage = localStorage;
+
+            var accessToken = localStorage.GetItem<string>("accessToken");
+            if (!string.IsNullOrEmpty(accessToken))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                userId = localStorage.GetItem<string>("userId");
+            }
         }
 
         public async Task CreateAsync(CreateTaskDto task)
         {
-            task.UserId = 1;
+            task.UserId = userId;
             task.CreatedAt = DateTime.Now;
 
             var response = await _httpClient.PostAsJsonAsync("api/todo/create", task);
@@ -32,7 +44,7 @@ namespace blazor.Service
             return await _httpClient.GetFromJsonAsync<List<TaskList>>("api/todo/getall");
         }
 
-        public async Task<List<TaskList>> GetByUserAsync(int userId)
+        public async Task<List<TaskList>> GetByUserAsync(string userId)
         {
             var response = await _httpClient.GetAsync($"api/todo/user/{userId}");
 

@@ -1,10 +1,8 @@
 ﻿@page "/GetByUser"
 
-@using blazor.Models
-@using blazor.Service
-
-@inject ApiService ApiService
+@inject CustomAuthStateProvider AuthStateProvider
 @inject NavigationManager NavigationManager
+@inject ApiService ApiService
 
 <PageTitle>List Of Task</PageTitle>
 <h3>List Of Task</h3>
@@ -40,16 +38,15 @@
 </table>
 
 @code {
+    private string? sortedColumn;
+    private bool sortAscending = true;
     private List<TaskList>? taskList = new();
 
     protected override async Task OnInitializedAsync()
     {
-        taskList = await ApiService.GetByUserAsync(1);
+        var userId = AuthStateProvider.userId;
+        taskList = await ApiService.GetByUserAsync(userId);
     }
-
-    private string? sortedColumn;
-    private bool sortAscending = true;
-
 
     private void SortTable(string columnName)
     {
